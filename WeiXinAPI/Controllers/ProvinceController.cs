@@ -17,8 +17,6 @@ namespace WeiXinAPI.Controllers
     {
         private readonly IProvinceRepository _provinceRepository;
         private readonly IMapper _mapper;
-
-
         public ProvinceController(IMapper mapper,IProvinceRepository provinceRepository)
         {
             _provinceRepository = provinceRepository ?? throw new ArgumentNullException(nameof(provinceRepository));
@@ -46,6 +44,7 @@ namespace WeiXinAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ProvinceDto>> CreateProvince([FromBody]ProvinceAddDto provinceAddDto)
         {
+         
             var entity = _mapper.Map<Province>(provinceAddDto);
             _provinceRepository.AddProvince(entity);
             await _provinceRepository.SaveAsync();
@@ -54,7 +53,12 @@ namespace WeiXinAPI.Controllers
             return CreatedAtRoute(nameof(GetProvince), new { provinceId = returndto.id }, returndto);
 
         }
-
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Add("Allow", "GET,POST,OPTIONS");
+            return Ok();
+        }
 
     }
 }

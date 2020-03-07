@@ -64,6 +64,26 @@ namespace WeiXinAPI.Controllers
             var dtoReturn = mapper.Map<CityDto>(entity);
             return CreatedAtRoute(nameof(GetCity),new { provinceId = ProvinceId, CityId = dtoReturn.Id }, dtoReturn);
         }
+        [HttpPut(template:"{CityId}")]
+        public async Task<IActionResult> UpdateCityForProvince(Guid ProvinceId,Guid CityId,CityUpdateDto cityUpdateDto)
+        {
+
+            if(!await provinceRepository.ProvinceExistAsync(ProvinceId))
+            {
+                return NotFound();
+            }
+
+            var city = await provinceRepository.GetCityAsync(ProvinceId, CityId);
+            if(city==null)
+            {
+                return NotFound();
+            }
+            mapper.Map(cityUpdateDto, city);
+            provinceRepository.UpdateCity(city);
+           await provinceRepository.SaveAsync();
+            return NoContent();
+        }
+
        
 
 
