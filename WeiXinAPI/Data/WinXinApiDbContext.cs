@@ -23,7 +23,9 @@ namespace WeiXinAPI.Data
 
             modelBuilder.Entity<City>().HasOne(navigationExpression: x => x.province)
                 .WithMany(navigationExpression: x => x.Cities)
-                .HasForeignKey(x => x.ProvinceId).OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(x => x.ProvinceId).OnDelete(DeleteBehavior.Cascade);
+
+
             modelBuilder.Entity<Province>().HasData(
                 new Province
                 {
@@ -45,18 +47,128 @@ namespace WeiXinAPI.Data
                     CurdPopulation = 265,
                     DeadPopulation = 2,
                     ProvCapital = "上海市"
-                },
+                }, 
                 new Province
                 {
-                    Id = Guid.Parse("db0185a5-48af-415f-b73f-46abc3fdc6ae"),
-                    Name = "黑龙江",
+                    Id = Guid.Parse("db0185a5-41af-415f-b73f-46abc3fdc6af"),
+                    Name = "北京市",
                     TotalPopulation = 20000000,
                     ConfirmedPopulation = 536,
                     CurdPopulation = 265,
                     DeadPopulation = 2,
-                    ProvCapital = "哈尔滨市"
-                }
-                );
+                    ProvCapital = "北京市"
+                },
+                new Province
+                {
+                    Id = Guid.Parse("db0185a5-424f-415f-b73f-46abc3fdc6af"),
+                    Name = "辽宁市",
+                    ProvCapital = "沈阳",
+                    TotalPopulation = 20000000,
+                    ConfirmedPopulation = 536,
+                    CurdPopulation = 265,
+                    DeadPopulation = 2,
+                },
+                new Province
+                {
+                    Id = Guid.Parse("DB0185A5-48AF-415F-B73F-46ABC3FDC6AE"),
+                    Name = "黑龙江省",
+                    ProvCapital = "哈尔滨市",
+                    TotalPopulation = 20000000,
+                    ConfirmedPopulation = 536,
+                    CurdPopulation = 265,
+                    DeadPopulation = 2,
+                },
+                 new Province
+                 {
+                     Id = Guid.NewGuid(),
+                     Name = "吉林省",
+                     ProvCapital = "长春市",
+                     TotalPopulation = 20000000,
+                     ConfirmedPopulation = 536,
+                     CurdPopulation = 265,
+                     DeadPopulation = 2,
+                 },
+                  new Province
+                  {
+                      Id = Guid.NewGuid(),
+                      Name = "江西省",
+                      ProvCapital = "南昌市",
+                      TotalPopulation = 20000000,
+                      ConfirmedPopulation = 536,
+                      CurdPopulation = 265,
+                      DeadPopulation = 2,
+                  },
+                   new Province
+                   {
+                       Id = Guid.NewGuid(),
+                       Name = "湖北省",
+                       ProvCapital = "武汉市",
+                       TotalPopulation = 20000000,
+                       ConfirmedPopulation = 536,
+                       CurdPopulation = 265,
+                       DeadPopulation = 2,
+                   },
+                    new Province
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "湖南省",
+                        ProvCapital = "长沙市",
+                        TotalPopulation = 20000000,
+                        ConfirmedPopulation = 536,
+                        CurdPopulation = 265,
+                        DeadPopulation = 2,
+                    },
+                     new Province
+                     {
+                         Id = Guid.NewGuid(),
+                         Name = "内蒙古自治区",
+                         ProvCapital = "呼和浩特",
+                         TotalPopulation = 20000000,
+                         ConfirmedPopulation = 536,
+                         CurdPopulation = 265,
+                         DeadPopulation = 2,
+                     },
+                      new Province
+                      {
+                          Id = Guid.NewGuid(),
+                          Name = "浙江省",
+                          ProvCapital = "杭州市",
+                          TotalPopulation = 20000000,
+                          ConfirmedPopulation = 536,
+                          CurdPopulation = 265,
+                          DeadPopulation = 2,
+                      },
+                       new Province
+                       {
+                           Id = Guid.NewGuid(),
+                           Name = "福建省",
+                           ProvCapital = "福州市",
+                           TotalPopulation = 20000000,
+                           ConfirmedPopulation = 536,
+                           CurdPopulation = 265,
+                           DeadPopulation = 2,
+                       },
+                        new Province
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = "河北省",
+                            ProvCapital = "石家庄市",
+                            TotalPopulation = 20000000,
+                            ConfirmedPopulation = 536,
+                            CurdPopulation = 265,
+                            DeadPopulation = 2,
+                        },
+                      
+                              new Province
+                              {
+                                  Id = Guid.NewGuid(),
+                                  Name = "云南省",
+                                  ProvCapital = "昆明市",
+                                  TotalPopulation = 20000000,
+                                  ConfirmedPopulation = 536,
+                                  CurdPopulation = 265,
+                                  DeadPopulation = 2,
+                              });
             modelBuilder.Entity<City>().HasData(
                 new City
                 {

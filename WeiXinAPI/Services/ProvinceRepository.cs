@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeiXinAPI.Data;
 using WeiXinAPI.Enitities;
+using WeiXinAPI.Helps;
 using WeiXinAPI.ResourceParameters;
 
 namespace WeiXinAPI.Services
@@ -75,17 +76,14 @@ namespace WeiXinAPI.Services
             }
             return await _context.Province.Where(x => x.Name == ProvinceName).FirstOrDefaultAsync();
         }
-        public async Task<IEnumerable<Province>> GetProvincesAsync(ProvinceDtoParameters parameters)
+        public async Task<PagedList<Province>>  GetProvincesAsync(ProvinceDtoParameters parameters)
         {
             if(parameters==null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
-            if(string.IsNullOrWhiteSpace(parameters.ProvinceName)&&string.IsNullOrWhiteSpace(parameters.SearchItems))
-               {
-                return await _context.Province.ToListAsync();
-            }
-            var queryExpression = _context.Province as IQueryable<Province>;
+          
+            var queryExpression = _context.Province as IQueryable<Province>;//可以延迟执行
             if(!string.IsNullOrWhiteSpace(parameters.ProvinceName))
             {
                 parameters.ProvinceName = parameters.ProvinceName.Trim();
@@ -96,8 +94,10 @@ namespace WeiXinAPI.Services
                 parameters.SearchItems = parameters.SearchItems.Trim();
                 queryExpression = queryExpression.Where(x => x.Name.Contains(parameters.SearchItems));
             }
-            return await queryExpression
-                .ToListAsync();
+            //完成过滤和搜索之后进行分页
+
+            return await PagedList<Province>.CreateAsync(queryExpression,parameters.PageNuber,parameters.PageSize);
+               //遇到Tolist，foreach，singleOrDefault会查询数据库
             
         }
         public async Task<IEnumerable<Province>> GetProvincesAsync(IEnumerable<Guid> provinceIds)

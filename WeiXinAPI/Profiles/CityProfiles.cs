@@ -19,6 +19,8 @@ namespace WeiXinAPI.Profiles
             ,memberOptions:opt=>opt.MapFrom(mapExpression:src=>src.CityName));
             CreateMap<CityUpdateDto, City>().ForMember(destinationMember: des => des.Name
             , memberOptions: opt => opt.MapFrom(mapExpression: src => src.CityName));
+            CreateMap<City, CityUpdateDto>().ForMember(destinationMember: des => des.CityName
+            , memberOptions: opt => opt.MapFrom(mapExpression: src => src.Name));
         }
     }
 }

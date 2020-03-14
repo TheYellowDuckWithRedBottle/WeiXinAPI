@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WeiXinAPI.Enitities;
+using WeiXinAPI.Helps;
 using WeiXinAPI.ResourceParameters;
 
 namespace WeiXinAPI.Services
 {
    public interface IProvinceRepository
     {
-        Task<IEnumerable<Province>> GetProvincesAsync(ProvinceDtoParameters parameters);
+        Task<PagedList<Province>> GetProvincesAsync(ProvinceDtoParameters parameters);
         Task<IEnumerable<Province>> GetProvincesAsync(IEnumerable<Guid> guids);
         Task<Province> GetProvinceAsync(Guid Province);
         Task<Province> GetProvinceAsync(string ProvinceName);

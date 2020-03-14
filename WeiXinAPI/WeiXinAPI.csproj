@@ -1,11 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>WeiXinAPI.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200308081337_updatedata.cs" />
+    <Compile Remove="Migrations\20200308081337_updatedata.Designer.cs" />
+    <Compile Remove="Migrations\20200308100811_update.cs" />
+    <Compile Remove="Migrations\20200308100811_update.Designer.cs" />
+    <Compile Remove="Migrations\20200308101643_new.cs" />
+    <Compile Remove="Migrations\20200308101643_new.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
       <PrivateAssets>all</PrivateAssets>
