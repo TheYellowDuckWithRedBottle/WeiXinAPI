@@ -22,7 +22,7 @@ namespace WeiXinAPI.Services
         Task<bool> ProvinceExistAsync(Guid guid);
 
 
-        Task<IEnumerable<City>> GetCitiesAsync(Guid Province,string cityName,string q);
+        Task<IEnumerable<City>> GetCitiesAsync(Guid Province,CityDtoParameters parameters);
         Task<City> GetCityAsync(Guid ProvinceId,Guid CityId);
 
         void AddCity(Guid ProvinceId, City   City);

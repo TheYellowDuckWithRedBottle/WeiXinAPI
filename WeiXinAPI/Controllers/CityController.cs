@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WeiXinAPI.Enitities;
 using WeiXinAPI.Model;
+using WeiXinAPI.ResourceParameters;
 using WeiXinAPI.Services;
 
 namespace WeiXinAPI.Controllers
@@ -32,9 +33,13 @@ namespace WeiXinAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CityDto>>> GetCities(Guid provinceId,
-            [FromQuery(Name = "CityName")]string filterName, string q)
+            [FromQuery] CityDtoParameters parameters)
         {
-            var city = await provinceRepository.GetCitiesAsync(provinceId, filterName, q);
+            if(!await provinceRepository.ProvinceExistAsync(provinceId))
+            {
+                return NotFound();
+            }
+            var city = await provinceRepository.GetCitiesAsync(provinceId, parameters);
             if (city == null)
             {
                 return NotFound();

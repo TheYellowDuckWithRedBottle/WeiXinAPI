@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WeiXinAPI.Data;
 using WeiXinAPI.Enitities;
 using WeiXinAPI.Helps;
+using WeiXinAPI.Model;
 using WeiXinAPI.ResourceParameters;
 
 namespace WeiXinAPI.Services
@@ -13,10 +14,11 @@ namespace WeiXinAPI.Services
     public class ProvinceRepository : IProvinceRepository
     {
         private readonly WinXinApiDbContext _context;
-
-        public ProvinceRepository(WinXinApiDbContext context)
+        private readonly IPropertyMappingService _propertyMappingService;
+        public ProvinceRepository(WinXinApiDbContext context,IPropertyMappingService propertyMappingService)
         {
             _context = context??throw new ArgumentNullException(nameof(context));
+            _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
         }
        /// <summary>
        /// 添加省数据
@@ -165,32 +167,32 @@ namespace WeiXinAPI.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<IEnumerable<City>> GetCitiesAsync(Guid ProvinceId,string CityName,string q)
+        public async Task<IEnumerable<City>> GetCitiesAsync(Guid ProvinceId,CityDtoParameters parameters)
         {
            if(ProvinceId==Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(ProvinceId));
             }
-            if (string.IsNullOrWhiteSpace(CityName)&&string.IsNullOrWhiteSpace(q))
-            {
-                return await _context.cities.Where(x => x.ProvinceId == ProvinceId).ToListAsync();
-            }
-
+        
             var items = _context.cities.Where(x=>x.ProvinceId==ProvinceId) as IQueryable<City>;
 
-            if (!string.IsNullOrWhiteSpace(CityName))
+            if (!string.IsNullOrWhiteSpace(parameters.CityName))
             {
-                var cityStr = CityName.Trim();
-                items = items.Where(x => x.Name == CityName);
+                var cityStr = parameters.CityName.Trim();
+                items = items.Where(x => x.Name == cityStr);
             }
-            if(!string.IsNullOrWhiteSpace(q))
+            if(!string.IsNullOrWhiteSpace(parameters.Q))
             {
-                q = q.Trim();
-                items = items.Where(x => x.Name.Contains(q));
+                parameters.Q = parameters.Q.Trim();
+                items = items.Where(x => x.Name.Contains(parameters.Q));
 
             }
 
-            return await items.OrderBy(x => x.Id).ToListAsync();
+            var mappgingDictionary = _propertyMappingService.GetPropertyMapping<CityDto, City>();
+
+            items.ApplySort(parameters.OrderBy, mappgingDictionary);
+
+            return await items.ToListAsync();
         
         }
 

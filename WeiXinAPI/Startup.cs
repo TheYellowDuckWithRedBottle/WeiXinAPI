@@ -43,7 +43,7 @@ namespace WeiXinAPI
                 option.UseSqlite(connectionString: "Data Source=weixin.db");
             });
             services.AddScoped<IProvinceRepository, ProvinceRepository>();
-            
+            services.AddTransient<IPropertyMappingService, PropertyMappingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

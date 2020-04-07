@@ -87,7 +87,7 @@ namespace WeiXinAPI.Controllers
             {
                 return NotFound();
             }
-            await _provinceRepository.GetCitiesAsync(provinceId,null,null);
+            await _provinceRepository.GetCitiesAsync(provinceId,null);
              _provinceRepository.DeleteProvince(provinceEntity);
             await _provinceRepository.SaveAsync();
             return NoContent();
